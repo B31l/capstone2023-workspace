@@ -1,0 +1,12 @@
+version: "0.1"
+
+services:
+  svelte:
+    image: svelte:0.1
+    command: npm run dev
+    ports:
+      - 5000:5000
+    environment:
+      - NODE_ENV=development
+      - PORT=5000
+      - HOST=0.0.0.0
