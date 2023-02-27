@@ -1,18 +1,15 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 app = FastAPI()
 
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
-
-
-@app.get("/items/{item.id}")
-def read_item(item_id: int, q: str | None = None):
-    return {"item_id": item_id, "q": q}
-
-
-@app.get("/foo")
-def foo():
-    return {"bar"}
+@app.get("/items/{item_id}")
+async def read_items(
+    *,
+    item_id: int = Path(title="The ID of the item to get", gt=0, le=1000, ),
+    q: str,
+):
+    results = {"item_id": item_id}
+    if q:
+        results.update({"q": q})
+    return results
